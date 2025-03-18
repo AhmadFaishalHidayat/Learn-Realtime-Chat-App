@@ -1,7 +1,7 @@
 import { generateToken } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-// import cloudinary from "../lib/cloudinary.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export default class authController {
   static async signup(req, res) {
@@ -108,6 +108,15 @@ export default class authController {
     } catch (error) {
       console.log("error in update profile:", error);
       res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  static async checkAuth(req, res) {
+    try {
+      res.status(200).json(req.user);
+    } catch (error) {
+      console.log("Error in checkAuth controller", error.message);
+      res.status(500).json({ message: "Internal Server Error" });
     }
   }
 }
